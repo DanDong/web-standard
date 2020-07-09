@@ -34,4 +34,20 @@ router.get('/md', async ctx => {
   }
 })
 
+router.get('/svg', async ctx => {
+  const files = fs.readdirSync(process.cwd() + '/public/iconfont/svg')
+  let svgNameList = files.filter(item => item.indexOf('.svg')>0)
+  let svgList =  svgNameList.map(item => {
+    return {
+      name: item,
+      content: String(fs.readFileSync(process.cwd() + '/public/iconfont/svg/' +item))
+    }
+  })
+  ctx.body = {
+    data: svgList,
+    status: 200,
+    msg: 'success'
+  }
+})
+
 module.exports = router
